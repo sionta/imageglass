@@ -1,12 +1,5 @@
-@echo off
-setlocal
-set /p <nul="Building 'Dracula.igtheme'..."
-where /q 7z.exe && (
-    7z.exe a "Dracula.zip" "Dracula" >nul
-) || (
-    powershell.exe -command "&{Compress-Archive .\Dracula .\Dracula.zip -Force}"
-)
-move /y "Dracula.zip" "Dracula.igtheme"
-echo. done.
-endlocal
-exit /b
+@echo of
+set /p <nul="Generating 'Dracula.igtheme'..."
+powershell.exe -noprofile -command try { Compress-Archive ./Dracula -Destination ./Dracula.igtheme -Force } catch { exit 1 }
+if %errorlevel% equ 0 (echo. done.) else (echo. error code: %errorlevel%)
+exit /b %errorlevel%
